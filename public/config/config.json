@@ -1,0 +1,22 @@
+{
+  "CONTRACT_ADDRESS": "0x9AEdeD2CD6E94Dc08e0A15900C525276742270a3",
+  "SCAN_LINK": "https://etherscan.io/address/0xbdca7f7265f55abcc5c62a46c2a9f939f60ca544",
+  "NETWORK": {
+    "NAME": "Ethereum",
+    "SYMBOL": "ETH",
+    "ID": 4
+  },
+  "NETWORK_ID_WALLET": 1,
+  "NFT_NAME": "VIP CARD ROOM NFT",
+  "SYMBOL": "VCR",
+  "MAX_SUPPLY": 500 ,
+  "WEI_COST_WL": 55000000000000000,
+  "DISPLAY_COST_WL": 0.055,
+  "WEI_COST_PU": 100000000000000000,
+  "DISPLAY_COST_PU": 0.1,   
+  "MAX_LIMIT": 2,
+  "GAS_LIMIT": 285000,
+  "MARKETPLACE": "Opeansea",
+  "MARKETPLACE_LINK": "https://opensea.io/collection/mutant-age-camel-club",
+  "SHOW_BACKGROUND": true
+}
