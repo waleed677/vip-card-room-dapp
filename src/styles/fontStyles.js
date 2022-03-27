@@ -5,8 +5,6 @@ const FontStyles = createGlobalStyle`
 @font-face {
   font-family: 'wonder';
   src: url(${wonder}) format('openType');
-  font-weight: 300;
-  font-style: normal;
 }
 `;
 

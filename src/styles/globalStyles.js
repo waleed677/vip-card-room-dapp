@@ -70,6 +70,7 @@ export const TextTitle = styled.p`
   line-height: 1.1;
   font-family: 'wonder';
   text-align:center ;
+  font-weight:bolder;
   color: var(--primary) !important ;
   
 
@@ -129,8 +130,8 @@ column-gap:${({ gap }) => (gap ? gap + "%" : "20%")};
 
 export const Mint = styled.div`
   padding:40px 80px;
-  background-color: rgba(0, 0, 0, 0.9);
-  border:1px solid #4b4b4b;
+  background-color: rgba(128, 63, 173, 0.7);
+  border:8px solid #fff;
   border-radius:25px;
   width: 40%;
 

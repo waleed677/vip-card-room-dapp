@@ -1,5 +1,5 @@
 :root {
-  --primary: #b891fe !important;
+  --primary: #fff !important;
   --primary-text: #1a1a1a;
   --secondary: #5FCDE4;
   --secondary-text: #ffffff;
@@ -11,8 +11,10 @@ body{
   background-color: #000000;
   background-image: url('./images/bg.jpg') !important; ;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
   background-position: center ;
+  font-family: 'wonder';
+  font-weight: bolder;
 } 
 
 
