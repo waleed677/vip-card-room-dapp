@@ -7,6 +7,7 @@ import { StyledRoundButton } from "./../../components/styles/styledRoundButton.s
 import * as s from "./../../styles/globalStyles";
 import Navbar from "../../components/Navbar/Navbar";
 import Countdown from "../../components/Countdown/Countdown";
+import axios from 'axios';
 
 const { createAlchemyWeb3, ethers } = require("@alch/alchemy-web3");
 
@@ -26,6 +27,8 @@ function Home() {
   const [displayCost, setDisplayCost] = useState(cost);
   const [show, setShow] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [canMint, setCanMint] = useState(-1);
+
   const [CONFIG, SET_CONFIG] = useState({
     CONTRACT_ADDRESS: "",
     SCAN_LINK: "",
@@ -97,18 +100,20 @@ function Home() {
     const abi = await abiResponse.json();
     var contract = new Contract(abi, '0xa5b6f9aa08190ebadc811835b92902c0dd22689d');
     contract.setProvider(web3.currentProvider);
-    console.log(blockNumber);
+    // console.log(blockNumber);
     const salesConfig = await contract.methods.saleConfig().call();
     setDisplayCost(Web3.utils.fromWei(salesConfig.mintlistPrice));
-    console.log(salesConfig.publicSaleStartTime);
+    // console.log(salesConfig.publicSaleStartTime);
     let blockDiff = blockNumber - salesConfig.publicSaleStartTime;
+
+    // multiply blockdiff by 3 sec and you will get the time in seconds
     if(salesConfig.publicSaleStartTime >= blockDiff){
       setShow(true);
       var timestamp = salesConfig.publicSaleStartTime
       var date = new Date(timestamp);
-      console.log(date.getTime())
-      console.log(date);
-      console.log(show);
+      // console.log(date.getTime())
+      // console.log(date);
+      // console.log(show);
     }
 
     }
@@ -116,6 +121,15 @@ function Home() {
   const getData = async () => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
+      axios.get(`http://3.86.187.33:8083/api/whitelist/key?address=${blockchain.account}`)
+      .then(res => {
+        console.log(res.data);
+        if(res.data.code === 0){
+          setCanMint(0);
+        }else{
+          setCanMint(1);
+        }
+      });
       const totalSupply = await blockchain.smartContract.methods
         .totalSupply()
         .call();
@@ -201,15 +215,12 @@ function Home() {
 
             <s.SpacerSmall />
             <s.SpacerLarge />
-            {blockchain.account !== "" && blockchain.smartContract !== null && blockchain.errorMsg === "" ? (
+
+            {blockchain.account !== "" && blockchain.smartContract !== null && blockchain.errorMsg === ""
+            && canMint === 1
+            ? (
               <s.Container ai={"center"} jc={"center"} fd={"row"}>
                 <s.connectButton
-                style={{
-                  textAlign: "center",
-                  color: "#fff",
-                  cursor: "pointer",
-                  fontWeight:"bolder"
-                }}
                   disabled={disable}
                   onClick={(e) => {
                     e.preventDefault();
@@ -224,7 +235,6 @@ function Home() {
               </s.Container>
             ) : (
               <>
-                {/* {blockchain.errorMsg === "" ? ( */}
                 <s.connectButton
                   style={{
                     textAlign: "center",
@@ -232,13 +242,14 @@ function Home() {
                     cursor: "pointer",
                     fontWeight:"bolder"
                   }}
+                  
                   onClick={(e) => {
                     e.preventDefault();
                     dispatch(connectWallet());
                     getData();
                   }}
                 >
-                  Connect to Wallet
+                  {canMint === -1 ? "Connect Your Wallet" : "This Wallet is not whitelisted"}
                 </s.connectButton>
                 {/* ) : ("")} */}
               </>
