@@ -193,7 +193,7 @@ export const connectButton = styled.button`
   color: var(--primary);
   font-family: 'wonder';
   text-align:center;
-  font-size:1.5rem;
+  font-size:1.8rem;
   border:1px solid var(--primary);
   border-radius:10px;
   cursor: pointer;

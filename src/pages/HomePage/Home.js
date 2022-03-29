@@ -28,7 +28,8 @@ function Home() {
   const [show, setShow] = useState(false);
   const [disable, setDisable] = useState(false);
   const [canMint, setCanMint] = useState(-1);
-
+  const [pushArr , setPushArr] = useState([]);
+  let proof = [];
   const [CONFIG, SET_CONFIG] = useState({
     CONTRACT_ADDRESS: "",
     SCAN_LINK: "",
@@ -58,8 +59,9 @@ function Home() {
     setFeedback(`Minting your ${CONFIG.NFT_NAME}`);
     setClaimingNft(true);
     setDisable(true);
+    console.log(pushArr);
     blockchain.smartContract.methods
-      .mint([],mintAmount)
+      .mint(pushArr,mintAmount)
       .send({
         gasLimit: String(totalGasLimit),
         to: CONFIG.CONTRACT_ADDRESS,
@@ -73,7 +75,7 @@ function Home() {
       })
       .then((receipt) => {
         setMintDone(true);
-        setFeedback(`Done, the ${CONFIG.NFT_NAME} is yours!`);
+        setFeedback(`Congratulations! You have successfully Minted a VCR NFT!`);
         setClaimingNft(false);
         blockchain.smartContract.methods
           .totalSupply()
@@ -121,13 +123,19 @@ function Home() {
   const getData = async () => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
-      axios.get(`http://3.86.187.33:8083/api/whitelist/key?address=${blockchain.account}`)
+      await axios.get(`https://vipcardroom.com/api/whitelist/key?address=${blockchain.account}`)
       .then(res => {
-        console.log(res.data);
+        console.log(res.data.data.proof);
         if(res.data.code === 0){
           setCanMint(0);
         }else{
+          let result = res.data.data.proof;
+          console.log(result);
+          proof = result;
+          setPushArr(proof);
           setCanMint(1);
+          console.log({pushArr});
+          console.log({canMint});
         }
       });
       const totalSupply = await blockchain.smartContract.methods
@@ -197,8 +205,8 @@ function Home() {
           mt={"20vh"}
         >
           <s.Mint>
-            <s.TextTitle size={4.0}>
-              MINTING NOW
+            <s.TextTitle size={2.0}>
+              VipCardRoom WhiteList Minting Now
             </s.TextTitle>
             <s.TextTitle size={2.0}>
               etherscan.io
@@ -207,9 +215,14 @@ function Home() {
            
             <s.SpacerLarge />
 
-            <s.FlexContainer fd={"row"} ai={"center"} jc={"center"}>
-              <s.TextTitle>1 Room RFT costs {displayCost}</s.TextTitle>
+            <s.FlexContainer fd={"column"} ai={"center"} jc={"center"}>
+              <div>
+                <s.TextTitle>Price: {displayCost}</s.TextTitle>
+              </div>
+              <div>
               <s.TextTitle size={1.5}> Excluding Gas Fee</s.TextTitle>
+
+              </div>
             </s.FlexContainer>
 
 
@@ -219,9 +232,15 @@ function Home() {
             {blockchain.account !== "" && blockchain.smartContract !== null && blockchain.errorMsg === ""
             && canMint === 1
             ? (
-              <s.Container ai={"center"} jc={"center"} fd={"row"}>
+              <s.Container ai={"center"} jc={"center"} fd={"column"}>
                 <s.connectButton
                   disabled={disable}
+                  style={{
+                    textAlign: "center",
+                    color: "#fff",
+                    cursor: "pointer",
+                    fontWeight:"bolder"
+                  }}
                   onClick={(e) => {
                     e.preventDefault();
                     claimNFTs();
@@ -229,9 +248,15 @@ function Home() {
                   }}
                 >
                   {" "}
-                  {claimingNft ? "Confirm Transaction in Wallet" : "Mint"}{" "}
-                  {mintDone ? feedback : ""}{" "}
+                  {claimingNft ? "Confirm Transaction in Wallet" : "Mint Now"}{" "}
+                
+                
                 </s.connectButton>{" "}
+               <s.SpacerLarge></s.SpacerLarge>
+                <s.TextTitle size={"1.5"}>
+                {mintDone ? feedback : ""}{" "}
+
+                </s.TextTitle>
               </s.Container>
             ) : (
               <>
