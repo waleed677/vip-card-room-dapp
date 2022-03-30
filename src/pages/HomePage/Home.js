@@ -100,7 +100,7 @@ function Home() {
       },
     });
     const abi = await abiResponse.json();
-    var contract = new Contract(abi, '0xa5b6f9aa08190ebadc811835b92902c0dd22689d');
+    var contract = new Contract(abi, '0x142cfb7288e198e064c87016347197e0faba4d6e');
     contract.setProvider(web3.currentProvider);
     // console.log(blockNumber);
     const salesConfig = await contract.methods.saleConfig().call();
