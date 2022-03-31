@@ -1,10 +1,10 @@
 {
-  "CONTRACT_ADDRESS": "0x142cfb7288e198e064c87016347197e0faba4d6e",
-  "SCAN_LINK": "https://etherscan.io/address/0xbdca7f7265f55abcc5c62a46c2a9f939f60ca544",
+  "CONTRACT_ADDRESS": "0x313d47ac9106ddcae354ba601a0f9097375587f0",
+  "SCAN_LINK": "https://etherscan.io/address/0x313d47ac9106ddcae354ba601a0f9097375587f0",
   "NETWORK": {
     "NAME": "Ethereum",
     "SYMBOL": "ETH",
-    "ID": 4
+    "ID": 1
   },
   "NETWORK_ID_WALLET": 1,
   "NFT_NAME": "VIP CARD ROOM NFT",

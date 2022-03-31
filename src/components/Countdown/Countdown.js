@@ -3,7 +3,7 @@ import { Count, CountText, Timer, Value, Wrapper,Digit } from "./Countdown.eleme
 
 
 function Countdown() {
-  let countDownDate = new Date("Mar 18, 2022 20:00:00 GMT -5:00").getTime();
+  let countDownDate = new Date("Mar 31, 2022 21:00:00 GMT +8:00").getTime();
 
     let now = new Date().getTime();
   

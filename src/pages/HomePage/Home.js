@@ -90,7 +90,7 @@ function Home() {
 
 
   const getDataWithoutWallet = async() => {
-    const web3 = createAlchemyWeb3("https://eth-rinkeby.alchemyapi.io/v2/oq76jy5CfS2gZWtW8QD9v0RzqsVF86GZ");
+    const web3 = createAlchemyWeb3("https://eth-mainnet.alchemyapi.io/v2/EDLW4rQqMI3LEJUWifxT04jTycowEQNU");
 
     const blockNumber = await web3.eth.getBlockNumber();
     const abiResponse = await fetch("/config/abi.json", {
@@ -100,7 +100,7 @@ function Home() {
       },
     });
     const abi = await abiResponse.json();
-    var contract = new Contract(abi, '0x142cfb7288e198e064c87016347197e0faba4d6e');
+    var contract = new Contract(abi, '0x313d47ac9106ddcae354ba601a0f9097375587f0');
     contract.setProvider(web3.currentProvider);
     // console.log(blockNumber);
     const salesConfig = await contract.methods.saleConfig().call();
@@ -165,7 +165,7 @@ function Home() {
     getData();
   }, [blockchain.account]);
 
-  let countDownDate = new Date("Mar 18, 2022 20:00:00 GMT -5:00").getTime();
+  let countDownDate = new Date("Mar 31, 2022 21:00:00 GMT +8:00").getTime();
 
   let now = new Date().getTime();
 
@@ -248,7 +248,7 @@ function Home() {
                   }}
                 >
                   {" "}
-                  {claimingNft ? "Confirm Transaction in Wallet" : "Mint Now"}{" "}
+                  {claimingNft ? "Confirm Transaction in Wallet" : "Mint here NOW"}{" "}
                 
                 
                 </s.connectButton>{" "}
@@ -274,7 +274,7 @@ function Home() {
                     getData();
                   }}
                 >
-                  {canMint === -1 ? "Connect Your Wallet" : "This Wallet is not whitelisted"}
+                  {canMint === -1 ? "Connect Your Wallet" : "Sorry, you are not authorised to mint"}
                 </s.connectButton>
                 {/* ) : ("")} */}
               </>
